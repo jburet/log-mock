@@ -4,22 +4,40 @@ import akka.actor.*;
 
 public class Main {
 
+    private ApacheAccessLog aal = new ApacheAccessLog();
+
     public static void main(String[] args) {
         Main m = new Main();
-        m.start(1, 1);
+        m.start(1);
     }
 
-    private void start(int nbClient, int nbIteration) {
+    private void start(int nbClient) {
         ActorSystem system = ActorSystem.create("LogSystem");
 
         // Create a client
-        ActorRef client1 = system.actorOf(new Props(new UntypedActorFactory() {
+        for (int i = 0; i < nbClient; i++) {
+            ActorRef client1 = stdClient(system);
+            // start
+            client1.tell("");
+        }
+
+    }
+
+    private ActorRef stdClient(ActorSystem system) {
+        return system.actorOf(new Props(new UntypedActorFactory() {
             @Override
             public Actor create() {
-                return new Client("80.1.2.3", UserAgent.FIREFOX_MAC_3, new ApacheAccessLog());
+                return new StdClient(IpGenerator.generateIp(), UserAgent.random(), aal);
             }
         }));
-        // start
-        client1.tell("");
+    }
+
+    private ActorRef clientCommingDirectlyOnAProduct(ActorSystem system) {
+        return system.actorOf(new Props(new UntypedActorFactory() {
+            @Override
+            public Actor create() {
+                return new DirectClient(IpGenerator.generateIp(), UserAgent.random(), aal);
+            }
+        }));
     }
 }

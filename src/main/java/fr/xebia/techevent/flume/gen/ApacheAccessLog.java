@@ -20,6 +20,11 @@ public class ApacheAccessLog {
 
     private String loginBaseUrl = "\"GET /login HTTP/1.1\" 200 100 ";
     private String logoutBaseUrl = "\"GET /logout HTTP/1.1\" 200 100 ";
+    private String searchBaseUrl = "\"GET /search HTTP/1.1\" 200 100 ";
+    private String viewBaseUrl = "\"GET /view HTTP/1.1\" 200 100 ";
+    private String buyBaseUrl = "\"GET /buy HTTP/1.1\" 200 100 ";
+    private String paySucessUrl = "\"GET /payment HTTP/1.1\" 200 100 ";
+    private String payErrorUrl = "\"GET /paymentError HTTP/1.1\" 200 100 ";
 
     public String login(String ip, UserAgent userAgent) {
         return baseLog(ip, userAgent, loginBaseUrl);
@@ -42,5 +47,25 @@ public class ApacheAccessLog {
 
     public String logout(String ip, UserAgent userAgent) {
         return baseLog(ip, userAgent, logoutBaseUrl);
+    }
+
+    public String view(String ip, UserAgent userAgent) {
+        return baseLog(ip, userAgent, viewBaseUrl);
+    }
+
+    public String search(String ip, UserAgent userAgent) {
+        return baseLog(ip, userAgent, searchBaseUrl);
+    }
+
+    public String buy(String ip, UserAgent userAgent) {
+        return baseLog(ip, userAgent, buyBaseUrl);
+    }
+
+    public String paySuccess(String ip, UserAgent userAgent) {
+        return baseLog(ip, userAgent, paySucessUrl);
+    }
+
+    public String payError(String ip, UserAgent userAgent) {
+        return baseLog(ip, userAgent, payErrorUrl);
     }
 }
