@@ -19,6 +19,7 @@ public class ApacheAccessLog {
     private DateFormat df = new SimpleDateFormat("[dd/MMM/yyyy:hh:mm:ss ZZ]");
 
     private String loginBaseUrl = "\"GET /login HTTP/1.1\" 200 100 ";
+    private String logoutBaseUrl = "\"GET /logout HTTP/1.1\" 200 100 ";
 
     public String login(String ip, UserAgent userAgent) {
         return baseLog(ip, userAgent, loginBaseUrl);
@@ -37,5 +38,9 @@ public class ApacheAccessLog {
         sb.append(userAgent.userAgent);
         sb.append("\"");
         return sb.toString();
+    }
+
+    public String logout(String ip, UserAgent userAgent) {
+        return baseLog(ip, userAgent, logoutBaseUrl);
     }
 }
